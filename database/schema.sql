@@ -1,0 +1,25 @@
+CREATE DATABASE IF NOT EXISTS compteur_db;
+USE compteur_db;
+
+CREATE TABLE users (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  nom VARCHAR(50) NOT NULL,
+  email VARCHAR(150) UNIQUE NOT NULL,
+  password VARCHAR(255) NOT NULL,
+  create_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  );
+CREATE TABLE counters (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT NOT NULL,
+  Value INT DEFEULT 0,
+  FOREIGN KEY (user_id) REFERENCES users(id)
+  );
+CREATE TABLE counter_history (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT NOT NULL,
+  operation ENUM('ADD','SUBTRACT') NOT NULL,
+  old_value INT NOT NULL,
+  new_value INT NOT NULL,
+  date_action DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(id)
+  );
